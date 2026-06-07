@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class Client {
     private String name;
     private String lastName;
-    private int phoneNumber;
+    private String phoneNumber;
     private ArrayList<Order> orders;
     
-    public Client(String name, String lastName, int phoneNumber){
+    public Client(String name, String lastName, String phoneNumber){
         this.name = name;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -23,6 +23,14 @@ public class Client {
     
     public void newOrder(Order order){
         orders.add(order);
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getPhoneNumber(){
+        return this.phoneNumber;
     }
     
     

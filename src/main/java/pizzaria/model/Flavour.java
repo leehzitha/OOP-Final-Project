@@ -17,4 +17,8 @@ public class Flavour {
         this.pizzaType = pizzaType;
         this.name = name;
     }
+    
+    public PizzaType getType(){
+        return this.pizzaType;
+    }
 }
