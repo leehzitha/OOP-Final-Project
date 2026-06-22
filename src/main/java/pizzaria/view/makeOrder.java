@@ -15,13 +15,15 @@ public class makeOrder extends javax.swing.JPanel {
 
     private ArrayList<Client> clientList;
     private javax.swing.JPanel lastScreen;
+    private Client selectedClient;
     /**
      * Creates new form makeOrder
      */
-    public makeOrder(ArrayList<Client> originalList, javax.swing.JPanel lastScreen) {
+    public makeOrder(ArrayList<Client> originalList, javax.swing.JPanel lastScreen, Client selectedClient) {
         initComponents();
         this.clientList = originalList;
         this.lastScreen = lastScreen;
+        this.selectedClient = selectedClient;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,7 +124,8 @@ public class makeOrder extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        listFlavors flavorsScreen = new listFlavors(this);
+        String format = jComboBox1.getSelectedItem().toString();
+        listFlavors flavorsScreen = new listFlavors(this, format);
         javax.swing.JFrame mainScreen = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         mainScreen.setContentPane(flavorsScreen);
         

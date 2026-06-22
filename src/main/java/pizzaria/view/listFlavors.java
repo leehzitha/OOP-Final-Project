@@ -11,12 +11,15 @@ package pizzaria.view;
 public class listFlavors extends javax.swing.JPanel {
 
     private javax.swing.JPanel lastScreen;
+    private String SelectedFormat;
     /**
      * Creates new form listFlavors
      */
-    public listFlavors(javax.swing.JPanel lastScreen) {
+    public listFlavors(javax.swing.JPanel lastScreen, String SelectedFormat) {
+        this.SelectedFormat = SelectedFormat;
         this.lastScreen = lastScreen;
         initComponents();
+        jLabel2.setText("Formato Selecionado: " + SelectedFormat);
     }
 
     /**

@@ -51,7 +51,6 @@ public class SignupClient extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(715, 380));
 
@@ -86,9 +85,6 @@ public class SignupClient extends javax.swing.JPanel {
         jButton2.setToolTipText("");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
-        jButton4.setText("Criar Pedido"); 
-        jButton4.setToolTipText("Abrir tela de pedidos");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -113,8 +109,6 @@ public class SignupClient extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18) // Espaço entre os dois botões superiores
-                .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -122,8 +116,7 @@ public class SignupClient extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE) // Alinha os dois botões na horizontal
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -199,15 +192,7 @@ public class SignupClient extends javax.swing.JPanel {
         clientListScreen();
     }
     
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        makeOrder make_order_screen = new makeOrder(this.clientList, this);
-        javax.swing.JFrame mainScreen = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        mainScreen.setContentPane(make_order_screen);
-        
-        mainScreen.revalidate();
-        mainScreen.repaint();
-    }
-
+    
     private void clientListScreen(){
         ListClient telaLista = new ListClient(this.clientList);
         javax.swing.JFrame mainScreen = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -219,7 +204,6 @@ public class SignupClient extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
