@@ -22,6 +22,24 @@ public class Pizzaria {
     private ArrayList<Client> clients;
     private PriceTable priceTable;
 
+    public Pizzaria(){
+        this.orders = new ArrayList<>();
+        this.clients = new ArrayList<>();
+        this.priceTable = new PriceTable();
+    }
+    
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
+
+    public ArrayList<Order> getOrdersList() {
+        return orders;
+    }
+
+    public PriceTable getPriceTable() {
+        return priceTable;
+    }
+
     public void newOrder(Client client, Pizza pizza){
         if (!clients.contains(client)) {
             throw new NoSuchElementException("Client not found");
@@ -38,7 +56,7 @@ public class Pizzaria {
         orders.remove(order);
     }
 
-    public String getOrders(){
+    public String getOrdersToStr(){
         String result = "";
         for (Order order : this.orders) {
             result += order.getId() + "  "
@@ -47,15 +65,40 @@ public class Pizzaria {
         }
         return result;
     }
+    
+    public Client findClientByTelephone(String telephone) {
+        for (Client c : clients) {
+            if (c.getTelephone().equals(telephone.trim())) {
+                return c;
+            }
+        }
+        return null;
+    }
+    
+    public Order findActiveOrderByClient(Client client) {
+        for (Order o : orders) {
+            //btsca um pedido daquele cliente que ainda esteja com status em aberto "PENDING"
+            if (o.getClient().equals(client) && o.getOrderStatus().equalsIgnoreCase("PENDING")) {
+                return o;
+            }
+        }
+        return null;
+    }
+    
+    public void deleteClientWithOrders(Client client) {
+        //rem todos os pedidos que pertencem ao cliente
+        orders.removeIf(order -> order.getClient().equals(client));
+        clients.remove(client);
+    }
 
     public static void main(String[] args) {
-        ArrayList<Client> clientList = new ArrayList<>();
+        Pizzaria pizzaria = new Pizzaria();
         JFrame screen = new JFrame("Pizzaria - Sistema de Cadastro");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setSize(800, 600);
         screen.setLocationRelativeTo(null);
 
-        SignupClient telaCadastro = new SignupClient( clientList , -1, null); // -1 == cadastro de cliente
+        SignupClient telaCadastro = new SignupClient( pizzaria , -1, null); // -1 == cadastro de cliente
         screen.add(telaCadastro);
 
         screen.setVisible(true);
