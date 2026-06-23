@@ -13,7 +13,7 @@ import pizzaria.forma.Forma;
  * @author letic
  */
 public class Square extends Forma{
-    public Square(int dimensao){
+    public Square(double dimensao){
         super(dimensao);
         
         if (dimensao < 10 || dimensao > 40){

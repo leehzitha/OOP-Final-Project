@@ -13,7 +13,7 @@ import pizzaria.forma.Forma;
  * @author letic
  */
 public class Circle extends Forma {
-    public Circle(int dimension){
+    public Circle(double dimension){
         super(dimension);
         
         if (dimension < 7 || dimension > 23){

@@ -8,6 +8,7 @@ import pizzaria.model.Client;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pizzaria.Pizzaria;
 
 /**
  *
@@ -17,12 +18,14 @@ public class ListClient extends javax.swing.JPanel {
 
     private DefaultTableModel tableModel;
     private ArrayList<Client> clientList;
+    private Pizzaria sistema;
     /**
      * Creates new form PainelListaCliente
      */
-    public ListClient( ArrayList<Client> originalList) {
+    public ListClient(Pizzaria sistema) {
        initComponents();
-       this.clientList = originalList;
+       this.sistema = sistema;
+       this.clientList = sistema.getClients();
        this.tableModel = (DefaultTableModel) jTable1.getModel();
        updateTable(this.clientList);
     }
@@ -53,6 +56,7 @@ public class ListClient extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -92,6 +96,10 @@ public class ListClient extends javax.swing.JPanel {
         jButton4.setText("Adicionar");
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
+        jButton5.setBackground(new java.awt.Color(204, 204, 204));
+        jButton5.setText("Adicionar Pedido");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+        
         jButton2.setBackground(new java.awt.Color(255, 0, 0));
         jButton2.setText("Excluir");
         jButton2.addActionListener(this::jButton2ActionPerformed);
@@ -112,21 +120,23 @@ public class ListClient extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4) // Adicionar no canto esquerdo
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(12, 12, 12)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
                                 .addComponent(jButton1))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))
-                            .addComponent(jButton4))))
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))) // Gerar Pedido substitui visualmente o Adicionar antigo
                 .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
@@ -137,7 +147,8 @@ public class ListClient extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4) 
+                    .addComponent(jButton5))
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -176,11 +187,29 @@ public class ListClient extends javax.swing.JPanel {
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        SignupClient signupScreen = new SignupClient(clientList, -1, this); //-1 é para cadastro de cliente e this é referente ao painel atual
+        SignupClient signupScreen = new SignupClient(this.sistema, -1, this); //-1 é para cadastro de cliente e this é referente ao painel atual
         javax.swing.JFrame janelaPrincipal = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         janelaPrincipal.setContentPane(signupScreen);
         janelaPrincipal.revalidate();
         janelaPrincipal.repaint();
+    }
+    
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            Client selectedClient = this.clientList.get(selectedRow);
+            
+            // Instancia a view de fazer pedido passando a lista e o cliente selecionado
+            makeOrder makeOrderScreen = new makeOrder(this.sistema, this, selectedClient);
+            
+            javax.swing.JFrame janelaPrincipal = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+            janelaPrincipal.setContentPane(makeOrderScreen);
+            janelaPrincipal.revalidate();
+            janelaPrincipal.repaint();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um cliente na tabela para gerar o pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,7 +235,7 @@ public class ListClient extends javax.swing.JPanel {
         int selectedRow = jTable1.getSelectedRow();
 
         if ( selectedRow >=0 ){
-            SignupClient editScreen = new SignupClient( this.clientList, selectedRow, this);
+            SignupClient editScreen = new SignupClient( this.sistema, selectedRow, this);
             javax.swing.JFrame janelaPrincipal = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
             janelaPrincipal.setContentPane(editScreen);
             janelaPrincipal.revalidate();
@@ -222,6 +251,7 @@ public class ListClient extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

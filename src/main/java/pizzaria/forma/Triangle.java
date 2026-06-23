@@ -9,7 +9,7 @@ package pizzaria.forma;
  * @author letic
  */
 public class Triangle extends Forma{
-    public Triangle(int dimension){
+    public Triangle(double dimension){
         super(dimension);
         
         if (dimension < 20 || dimension > 23){

@@ -10,9 +10,9 @@ package pizzaria.forma;
  * @author letic
  */
 public abstract class Forma {
-    protected int dimensao;
+    protected double dimensao;
     
-    public Forma(int dimensao){
+    public Forma(double dimensao){
         this.dimensao = dimensao;
     };
     public abstract double getArea();

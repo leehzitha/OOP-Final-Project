@@ -3,6 +3,7 @@ package pizzaria.view;
 import pizzaria.model.Client;
 import java.util.ArrayList;
 import javax.swing.JOptionPane; // Para as mensagens de alerta
+import pizzaria.Pizzaria;
 /**
  *
  * @author Vinicius Dias
@@ -10,14 +11,16 @@ import javax.swing.JOptionPane; // Para as mensagens de alerta
 public class SignupClient extends javax.swing.JPanel {
 
     private ArrayList<Client> clientList;
+    private Pizzaria sistema;
     private int clientIndex = -1;
     private javax.swing.JPanel lastScreen;
     /**
      * Creates new form CadastraCliente
      */
-    public SignupClient(ArrayList<Client> clientList, int clientIndex, javax.swing.JPanel lastScreen) {
+    public SignupClient(Pizzaria sistema, int clientIndex, javax.swing.JPanel lastScreen) {
         initComponents();
-        this.clientList = clientList;
+        this.sistema = sistema;
+        this.clientList = sistema.getClients();
         this.clientIndex = clientIndex;
         this.lastScreen = lastScreen;
 
@@ -85,6 +88,7 @@ public class SignupClient extends javax.swing.JPanel {
         jButton2.setToolTipText("");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,7 +118,8 @@ public class SignupClient extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE) // Alinha os dois botões na horizontal
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -189,9 +194,10 @@ public class SignupClient extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         clientListScreen();
     }
-
+    
+    
     private void clientListScreen(){
-        ListClient telaLista = new ListClient(this.clientList);
+        ListClient telaLista = new ListClient(this.sistema);
         javax.swing.JFrame mainScreen = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         mainScreen.setContentPane(telaLista);
         mainScreen.revalidate();
