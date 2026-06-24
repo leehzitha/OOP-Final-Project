@@ -40,7 +40,7 @@ public class ListOrders extends javax.swing.JFrame {
                 order.getClient().getTelephone(),
                 order.getClient().getAdress(),
                 order.getPrice(table),
-                order.getStatus();
+                order.getOrderStatus()
             });
             
         }
