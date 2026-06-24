@@ -46,7 +46,7 @@ public class Pizzaria {
         }
         int id = orders.size();
         Order order = new Order(client, pizza, id);
-        client.newOrder(order);
+        orders.add(order);
     }
 
     public void cancelOrder(Order order){

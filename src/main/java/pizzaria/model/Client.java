@@ -14,6 +14,7 @@ public class Client {
     private String name;
     private String lastname;
     private String telephone;
+    private String adress;
     private ArrayList<Order> orders;
 
     public Client (String name, String lastname, String telephone) {
@@ -32,6 +33,9 @@ public class Client {
     public String getTelephone() { return telephone;}
     public void setTelephone(String telephone) {this.telephone = telephone;}
 
+    public String getAdress() { return adress; }
+    public void setAdress(String adress) { this.adress = adress; }
+    
     public void newOrder(Order order){
         orders.add(order);
     }

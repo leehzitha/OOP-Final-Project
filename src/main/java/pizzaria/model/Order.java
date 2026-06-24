@@ -11,41 +11,30 @@ public class Order {
     private int id;
     private Client client;
     private ArrayList<Pizza> pizzas = new ArrayList<>();
-    private double subtotal = 0.0;
-    private String orderStatus;
+    private Status orderStatus;
 
-    public double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
-    
     public Order(Client client, Pizza pizza, int id){
         this.client = client;
         this.id = id;
         this.pizzas.add(pizza);
         client.newOrder(this);
-        this.orderStatus = "ABERTO";
+        this.orderStatus = Status.ABERTO;
     }
 
-    public String getOrderStatus() {
+    public Status getOrderStatus() {
         return this.orderStatus;
     }
     
-    public void setOrderStatus(String status){
-        String[] immutableStatus = {"ENTREGUE", "A CAMINHO"};
-        if ( status == "ABERTO" && !Arrays.asList(immutableStatus).contains(this.getOrderStatus()) ){
-            this.orderStatus = "ABERTO";
-        } else {
-            this.orderStatus = status;
+    public void setOrderStatus(Status status){
+        if (status == Status.ABERTO &&
+            (orderStatus == Status.ENTREGUE || orderStatus == Status.A_CAMINHO)) {
+            throw new IllegalStateException("Pedido entregue não pode voltar para aberto.");
         }
+        this.orderStatus = status;
     }
     
     public void addPizza(Pizza pizza, PriceTable priceTable){
         this.pizzas.add(pizza);
-        this.subtotal += pizza.getPrice(priceTable);
     }
     
     public int getId(){
@@ -61,9 +50,12 @@ public class Order {
     }
     
     public double getPrice(PriceTable priceTable){
-        for (Pizza pizza : pizzas){
-            this.subtotal += pizza.getPrice(priceTable);
+        double total = 0;
+
+        for(Pizza pizza : pizzas){
+            total += pizza.getPrice(priceTable);
         }
-       return this.subtotal;
+
+        return total;
     }
 }
