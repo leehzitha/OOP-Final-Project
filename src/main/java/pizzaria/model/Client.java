@@ -15,7 +15,7 @@ public class Client {
     private String lastname;
     private String telephone;
     private String adress;
-    private ArrayList<Order> orders;
+    private ArrayList<Order> orders = new ArrayList();
 
     public Client (String name, String lastname, String telephone) {
         this.name = name;

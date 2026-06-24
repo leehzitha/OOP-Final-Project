@@ -38,7 +38,6 @@ public class ListOrders extends javax.swing.JFrame {
                 order.getPizzas().size(),
                 order.getClient().getName(),
                 order.getClient().getTelephone(),
-                order.getClient().getAdress(),
                 order.getPrice(table),
                 order.getOrderStatus()
             });

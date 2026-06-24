@@ -8,13 +8,19 @@ import pizzaria.model.Pizza;
 import pizzaria.model.Client;
 import pizzaria.model.Order;
 import pizzaria.model.PriceTable;
+import pizzaria.model.Status;
+import pizzaria.forma.Square;
+import pizzaria.forma.Forma;
+import pizzaria.model.PizzaType;
+import pizzaria.model.Flavour;
+import pizzaria.view.ListOrders;
 import java.util.NoSuchElementException;
 import pizzaria.view.SignupClient;
 import javax.swing.JFrame;
 
 /**
  *
- * @author letic
+ * @author Leticia Burlinski
  * @author Vinicius Dias
  */
 public class Pizzaria {
@@ -27,6 +33,8 @@ public class Pizzaria {
         this.clients = new ArrayList<>();
         this.priceTable = new PriceTable();
     }
+    
+    public void newClient(Client client){ clients.add(client);}
     
     public ArrayList<Client> getClients() {
         return clients;
@@ -78,7 +86,7 @@ public class Pizzaria {
     public Order findActiveOrderByClient(Client client) {
         for (Order o : orders) {
             //btsca um pedido daquele cliente que ainda esteja com status em aberto "PENDING"
-            if (o.getClient().equals(client) && o.getOrderStatus().equalsIgnoreCase("PENDING")) {
+            if (o.getClient().equals(client) && o.getOrderStatus() == Status.ABERTO) {
                 return o;
             }
         }
@@ -93,15 +101,27 @@ public class Pizzaria {
 
     public static void main(String[] args) {
         Pizzaria pizzaria = new Pizzaria();
-        JFrame screen = new JFrame("Pizzaria - Sistema de Cadastro");
-        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        screen.setSize(800, 600);
-        screen.setLocationRelativeTo(null);
+        Client leticia = new Client("Leticia", "Burlinski", "(41) 98883-4354");
+        Pizza pizzaRedonda = new Pizza(
+                new Square(20),
+                new Flavour[] {
+                    new Flavour(PizzaType.Simple, "Calabresa"),
+                    new Flavour(PizzaType.Premium, "Nachos")
+                });
+        
+        pizzaria.newClient(leticia);
+        pizzaria.newOrder(leticia, pizzaRedonda);
+        //JFrame screen = new JFrame("Pizzaria - Sistema de Cadastro");
+        //screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //screen.setSize(800, 600);
+        //screen.setLocationRelativeTo(null);
 
-        SignupClient telaCadastro = new SignupClient( pizzaria , -1, null); // -1 == cadastro de cliente
-        screen.add(telaCadastro);
-
-        screen.setVisible(true);
+        //SignupClient telaCadastro = new SignupClient( pizzaria , -1, null); // -1 == cadastro de cliente;
+        ListOrders telaPedido = new ListOrders();
+        telaPedido.carregarPedidos(pizzaria);
+        //screen.add(telaPedido);
+        telaPedido.setVisible(true);
+        //screen.setVisible(true);
     }
 
 

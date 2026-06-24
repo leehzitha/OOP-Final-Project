@@ -20,7 +20,11 @@ public class Pizza {
     private Flavour[] flavours = new Flavour[2];
     private double price = 0.00;
     
-   
+   public Pizza(Forma forma, Flavour[] flavours){
+       this.forma = forma;
+       this.flavours = flavours;
+   }
+    
     public double getPrice(PriceTable priceTable){
         for (Flavour flavour : flavours){
             switch (flavour.getType()) {
