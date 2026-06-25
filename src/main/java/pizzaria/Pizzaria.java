@@ -111,17 +111,16 @@ public class Pizzaria {
         
         pizzaria.newClient(leticia);
         pizzaria.newOrder(leticia, pizzaRedonda);
-        //JFrame screen = new JFrame("Pizzaria - Sistema de Cadastro");
-        //screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //screen.setSize(800, 600);
-        //screen.setLocationRelativeTo(null);
+        JFrame screen = new JFrame("Pizzaria - Sistema de Cadastro");
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        screen.setSize(800, 600);
+        screen.setLocationRelativeTo(null);
 
-        //SignupClient telaCadastro = new SignupClient( pizzaria , -1, null); // -1 == cadastro de cliente;
+        SignupClient telaCadastro = new SignupClient( pizzaria , -1, null); // -1 == cadastro de cliente;
         ListOrders telaPedido = new ListOrders();
         telaPedido.carregarPedidos(pizzaria);
-        //screen.add(telaPedido);
-        telaPedido.setVisible(true);
-        //screen.setVisible(true);
+        screen.add(telaPedido);
+        screen.setVisible(true);
     }
 
 
