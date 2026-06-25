@@ -39,6 +39,7 @@ public class Client {
     public void newOrder(Order order){
         orders.add(order);
     }
+    
 
     @Override
     public String toString() {
