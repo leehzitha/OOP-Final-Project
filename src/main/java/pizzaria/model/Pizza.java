@@ -18,24 +18,42 @@ import pizzaria.model.PriceTable;
 public class Pizza {
     
     private Forma forma;
+
+    public Forma getForma() {
+        return forma;
+    }
     private Flavour[] flavours = new Flavour[2];
     private double price = 0.00;
    
-    public double getPrice(PriceTable priceTable){
-        for (Flavour flavour : flavours){
-            switch (flavour.getType()) {
-                case Simple:
-                    this.price += priceTable.getSimplePrice(this);
-                    break;
-                case Special:
-                    this.price += priceTable.getSpecialPrice(this);
-                    break;
-                case Premium:
-                    this.price += priceTable.getPremiumPrice(this);
-                    break;
-                default: break;
+    public double getPrice(PriceTable priceTable) {
+        double precoAcumulado = 0.0;
+        int saboresContados = 0;
+
+        for (Flavour flavour : flavours) {
+            if (flavour != null){
+                saboresContados++;
+                switch (flavour.getType()) {
+                    case Simple:
+                        precoAcumulado += priceTable.getSimplePrice(this);
+                        break;
+                    case Special:
+                        precoAcumulado += priceTable.getSpecialPrice(this);
+                        break;
+                    case Premium:
+                        precoAcumulado += priceTable.getPremiumPrice(this);
+                        break;
+                    default: 
+                        break;
+                }
             }
         }
+
+        if (saboresContados > 0) {
+            this.price = precoAcumulado / saboresContados;
+        } else {
+            this.price = 0.00;
+        }
+
         return this.price;  
     }
     
@@ -53,6 +71,14 @@ public class Pizza {
         if (qtde == 0)
             return 0;
         return qtde;
+    }
+    
+    public void setForma(Forma forma) {
+        this.forma = forma;
+    }
+
+    public void setFlavours(Flavour[] flavours) {
+        this.flavours = flavours;
     }
 }
 

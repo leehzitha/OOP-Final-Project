@@ -17,19 +17,19 @@
             if (pizza.getFlavourQuantity() == 0)
                 return 0.0;
 
-            return pizza.getArea() / pizza.getFlavourQuantity() * simplePrice;
+            return pizza.getArea() * simplePrice;
         }
 
         public double getSpecialPrice(Pizza pizza){
             if (pizza.getFlavourQuantity() == 0)
                 return 0.0;
 
-            return pizza.getArea() / pizza.getFlavourQuantity() * specialPrice;
+            return pizza.getArea() * specialPrice;
         }
 
         public double getPremiumPrice(Pizza pizza){
             if (pizza.getFlavourQuantity() == 0)
                 return 0.0;
-            return pizza.getArea() / pizza.getFlavourQuantity() * premiumPrice;
+            return pizza.getArea() * premiumPrice;
         }
     }

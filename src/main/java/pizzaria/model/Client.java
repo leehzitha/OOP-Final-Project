@@ -20,6 +20,7 @@ public class Client {
         this.name = name;
         this.lastname = lastname;
         this.telephone = telephone;
+        this.orders = new ArrayList<>();
     }
 
     //getters e setters

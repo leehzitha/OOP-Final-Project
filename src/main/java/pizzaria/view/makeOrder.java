@@ -30,6 +30,13 @@ public class makeOrder extends javax.swing.JPanel {
         this.clientList = sistema.getClients();
         this.lastScreen = lastScreen;
         this.selectedClient = selectedClient;
+
+        jTextField2.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { atualizarArea(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { atualizarArea(); }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { atualizarArea(); }
+        });
+
         jTextField2.setText("0");
         jComboBox1ActionPerformed(null);
     }
@@ -177,34 +184,59 @@ public class makeOrder extends javax.swing.JPanel {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String format = jComboBox1.getSelectedItem().toString();
-        
         double formatDefault = 0;
-        double areaDefault = 0;
-        System.out.println(format);
+
         switch (format){
-                case "Círculo":
-                    formatDefault = 7.0; //raio min
-                    areaDefault = Math.PI * Math.pow(formatDefault, 2);
-                    jLabel3.setText("Raio (7 - 23cm):");
-                    break;
-                case "Triângulo":
-                    formatDefault = 20.0;
-                    areaDefault = (Math.pow(formatDefault, 2) * Math.sqrt(3)) / 4.0;
-                    jLabel3.setText("Lado (20 - 60 cm):");
-                    break;
-                case "Quadrado":
-                    formatDefault = 10.0;
-                    areaDefault = Math.pow( formatDefault, 2);
-                    jLabel3.setText("Lado (10 - 40 cm):");
-                    break;
-                default:
-                    jLabel3.setText("Dimensão(cm):");
+            case "Círculo":
+                formatDefault = 7.0; //raio min
+                jLabel3.setText("Raio (7 - 23cm):");
+                break;
+            case "Triângulo":
+                formatDefault = 20.0;
+                jLabel3.setText("Lado (20 - 60 cm):");
+                break;
+            case "Quadrado":
+                formatDefault = 10.0;
+                jLabel3.setText("Lado (10 - 40 cm):");
+                break;
+            default:
+                jLabel3.setText("Dimensão(cm):");
         }
-        // Alimenta os campos de texto com os formatos padrão calculados
-        jTextField2.setText(String.valueOf(formatDefault));
-        jLabel4.setText("Área (cm 2): " + String.format("%.2f", areaDefault));
+
+        jTextField2.setText(String.valueOf(formatDefault));    
+        atualizarArea();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void atualizarArea() {
+        try {
+            String format = jComboBox1.getSelectedItem().toString();
+            String dimensionText = jTextField2.getText().replace(",", ".");
+            if (dimensionText.trim().isEmpty()) {
+                jLabel4.setText("Área (cm 2): 0.00");
+                return;
+            }
+
+            double dimension = Double.parseDouble(dimensionText);
+            double area = 0.0;
+
+            switch (format) {
+                case "Círculo":
+                    area = Math.PI * Math.pow(dimension, 2);
+                    break;
+                case "Triângulo":
+                    area = (Math.pow(dimension, 2) * Math.sqrt(3)) / 4.0;
+                    break;
+                case "Quadrado":
+                    area = Math.pow(dimension, 2);
+                    break;
+            }
+
+            jLabel4.setText("Área (cm 2): " + String.format("%.2f", area));
+
+        } catch (NumberFormatException e) {
+            jLabel4.setText("Área (cm 2): Valor Inválido");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
