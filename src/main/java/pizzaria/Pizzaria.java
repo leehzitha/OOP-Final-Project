@@ -22,7 +22,7 @@ public class Pizzaria {
     private ArrayList<Order> orders;
     private ArrayList<Client> clients;
     private PriceTable priceTable;
-    private ArrayList<Flavour> flavoursList; // Ou ArrayList<Sabor> se usou uma classe para o modelo
+    private ArrayList<Flavour> flavoursList;
 
     public Pizzaria(){
         this.orders = new ArrayList<>();
@@ -47,13 +47,14 @@ public class Pizzaria {
         return flavoursList;
     }
 
-    public void newOrder(Client client, Pizza pizza){
+    public void newOrder(Client client, ArrayList<Pizza> pizzas, double subtotal){
         if (!clients.contains(client)) {
-            throw new NoSuchElementException("Client not found");
+            throw new NoSuchElementException("Cliente inexistente");
         }
-        int id = orders.size();
-        Order order = new Order(client, pizza, id);
-        client.newOrder(order);
+        int id = orders.size(); //id sequencial
+        Order order = new Order(client, pizzas, subtotal, id);
+        
+        this.orders.add(order);
     }
 
     public void cancelOrder(Order order){
@@ -84,8 +85,7 @@ public class Pizzaria {
     
     public Order findActiveOrderByClient(Client client) {
         for (Order o : orders) {
-            //btsca um pedido daquele cliente que ainda esteja com status em aberto "PENDING"
-            if (o.getClient().equals(client) && o.getOrderStatus().equalsIgnoreCase("PENDING")) {
+            if (o.getClient().equals(client) && o.getOrderStatus().equalsIgnoreCase("ABERTO")) {
                 return o;
             }
         }

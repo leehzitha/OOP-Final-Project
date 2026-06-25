@@ -22,14 +22,15 @@ public class Order {
         this.subtotal = subtotal;
     }
     
-    public Order(Client client, Pizza pizza, int id){
+    public Order(Client client, ArrayList<Pizza> pizzas, double subtotal, int id){
         this.client = client;
         this.id = id;
-        this.pizzas.add(pizza);
-        client.newOrder(this);
+        this.pizzas = new ArrayList<>(pizzas);
+        this.subtotal = subtotal;
         this.orderStatus = "ABERTO";
+        client.newOrder(this);
     }
-
+    
     public String getOrderStatus() {
         return this.orderStatus;
     }
@@ -61,9 +62,11 @@ public class Order {
     }
     
     public double getPrice(PriceTable priceTable){
+        double totalCalculado = 0.0;
         for (Pizza pizza : pizzas){
-            this.subtotal += pizza.getPrice(priceTable);
+            totalCalculado += pizza.getPrice(priceTable);
         }
-       return this.subtotal;
+        this.subtotal = totalCalculado;
+        return this.subtotal;
     }
 }
