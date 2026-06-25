@@ -1,4 +1,5 @@
 pizzaria\view\ListFlavours.class
+pizzaria\view\ChangeStatus.class
 pizzaria\view\makeOrder$1.class
 pizzaria\view\ListOrders.class
 pizzaria\view\ConfigPrice$1.class

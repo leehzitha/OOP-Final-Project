@@ -4,6 +4,7 @@
  */
 package pizzaria.view;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pizzaria.Pizzaria;
 import pizzaria.model.Order;
@@ -38,7 +39,7 @@ public class ListOrders extends javax.swing.JPanel {
             if (o.getPizzas().isEmpty()) continue; 
 
             Pizza p = o.getPizzas().get(0); 
-
+            System.out.println(o.getOrderStatus());
             model.addRow(new Object[]{
                 o.getId(),
                 o.getPizzas().size(),
@@ -62,6 +63,7 @@ public class ListOrders extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Pedidos");
@@ -82,6 +84,10 @@ public class ListOrders extends javax.swing.JPanel {
         jButton1.setText("Voltar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
+        jButton2.setBackground(new java.awt.Color(255, 153, 51));
+        jButton2.setText("Mudar Status");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,7 +95,9 @@ public class ListOrders extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,7 +113,9 @@ public class ListOrders extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -117,9 +127,27 @@ public class ListOrders extends javax.swing.JPanel {
         lastWindow.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+
+        if (selectedRow >= 0) {
+            Order selectedOrder = this.sistema.getOrdersList().get(selectedRow);
+            
+            javax.swing.JFrame window = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+            ChangeStatus telaMudaStatus = new ChangeStatus(selectedOrder, this, this.sistema, lastScreen);
+            window.setContentPane(telaMudaStatus);
+            window.revalidate();
+            window.repaint();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um cliente na tabela para gerar o pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
