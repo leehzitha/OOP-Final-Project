@@ -179,6 +179,12 @@ public class SignupClient extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Por favor, garanta que todos os campos estejam preenchidos!.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        if (!telephone.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "O telefone deve conter apenas números! Não use letras, espaços ou traços.", "Erro de Validação", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         Client newClient = new Client(name, lastname, telephone);
 
         if (this.clientIndex == -1) {
@@ -232,4 +238,5 @@ public class SignupClient extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration
+    
 }

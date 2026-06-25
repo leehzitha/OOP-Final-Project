@@ -172,7 +172,7 @@ public class SignupFlavour extends javax.swing.JPanel {
 
         System.out.println("Total de sabores: " + flavourList.size());
     }
-
+    
     // Ver Sabores: navega para a listagem
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         flavourListScreen();

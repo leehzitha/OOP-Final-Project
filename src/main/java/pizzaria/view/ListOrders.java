@@ -44,7 +44,7 @@ public class ListOrders extends javax.swing.JPanel {
                 o.getPizzas().size(),
                 o.getClient().getName(),
                 o.getClient().getTelephone(),
-                String.format("R$ %.2f", o.getPrice(pt)),
+                String.format("R$ %.2f", o.getSubtotal()),
                 o.getOrderStatus()
             });
         }
